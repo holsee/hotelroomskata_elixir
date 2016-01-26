@@ -1,42 +1,49 @@
 defmodule Hotels do
-
-  def find(hotel) do
-    hotel
-    |> locate_target
-  end
   
-  def locate_target(hotel) do
-    
-    buildings = hotel
-                |> String.reverse
-                |> String.strip(?\s)
-                |> String.split("\n")
-                |> List.first 
-                |> String.split("  ")
-                |> length
-    
-    IO.puts "Buildings #{buildings}"
-
+  def find(hotel) do    
     floors = hotel
-              |> String.split("\n")
-              |> Enum.reverse
-              |> Enum.map(fn (f) -> String.split(f, "  ", parts: buildings)
-                                    |> Enum.map(&String.strip(&1, ?\s))
-                                    |> Enum.with_index
-                          end)
-              |> Enum.with_index
-
-    IO.inspect floors
+             |> String.split("\n")
+             |> Enum.reverse
+             |> Enum.with_index
     
-    List.foldl(floors, [], fn({buildings, floor_no}, state) ->
-                                      state ++ Enum.filter_map(buildings,
-                                                              fn({rooms, _}) ->
-                                                                String.contains?(rooms, "*") 
-                                                              end,
-                                                              fn({rooms, building_no}) ->
-                                                                {building_no+1, floor_no+1, :string.chr(String.to_char_list(rooms), ?*)}
-                                                              end)
-                                    end)
+
+    [{floor_no, room_idx}] = floors
+                             |> Enum.filter_map(fn({rooms, _}) ->
+                                                  String.contains?(rooms, "*")
+                                                end,
+                                                fn({rooms, floor_idx}) ->
+                                                  {floor_idx+1, room_idx(rooms)}
+                                                end)
+
+    IO.puts "floor number: #{floor_no}, room index: #{room_idx}"
+    
+    {building_no, room_no} = find_building_from_room_idx(floors, room_idx)
+
+    (building_no * 100) + (floor_no * 10) + room_no
+  end
+
+  def room_idx(rooms) do
+    rooms
+    |> String.to_char_list
+    |> :string.chr(?*)
+  end
+
+  def find_building_from_room_idx(floors, room_idx) do
+    {first_floor,0} = List.first floors
+    buildings = String.slice(first_floor, 0..room_idx-1)
+                |> String.split("  ")
+    
+    building_no = Enum.count(buildings)
+
+    IO.puts "building no: #{building_no}"
+
+    room_no = buildings 
+              |> List.last
+              |> String.length 
+    
+    IO.puts "room no: #{room_no}" 
+
+    {building_no, room_no}
   end
 
 end

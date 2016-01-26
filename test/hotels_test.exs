@@ -4,12 +4,12 @@ defmodule HotelsTest do
 
   test "find first hotel room number" do
     hotel = "*"
-    assert Hotels.find(hotel) == [{1,1,1}]
+    assert Hotels.find(hotel) == 111
   end
 
   test "find 3rd building 1st room number" do
     hotel = "#  #  *  #  #"
-    assert Hotels.find(hotel) == [{3,1,1}]
+    assert Hotels.find(hotel) == 311
   end
 
   test "find 9th building 1st room" do
@@ -18,7 +18,7 @@ defmodule HotelsTest do
          #####           ######
          #####           ######
 #  #  #  #####  #  #  #  ######  *"
-    assert Hotels.find(hotel) == [{9,1,1}] 
+    assert Hotels.find(hotel) == 911 
   end
 
   test "find 5th building 2nd floor 3rd room" do
@@ -30,7 +30,7 @@ defmodule HotelsTest do
 #  #  ##  ###  #####
 #  #  ##  ###  ##*##  ########
 #  #  ##  ###  #####  ########"
-    assert Hotels.find(hotel) == [{5,2,3}]
+    assert Hotels.find(hotel) == 523
   end 
 
   test "find 2nd building 8th floor 1st room" do
@@ -44,7 +44,7 @@ defmodule HotelsTest do
            #  
            #  
 #########  #  #"
-    assert Hotels.find(hotel) == [{2,8,1}]
+    assert Hotels.find(hotel) == 281
   end 
 
 
@@ -59,7 +59,7 @@ defmodule HotelsTest do
                         #########
                         #########
 #  #  #  #  #  #  #  #  #########"
-    assert Hotels.find(hotel) == [{9,9,9}]
+    assert Hotels.find(hotel) == 999
   end 
 
 end
