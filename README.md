@@ -1,20 +1,13 @@
 # Hotels
 
-**TODO: Add description**
+Implementation of the [Hotel Rooms Kata](https://github.com/holsee/HotelRoomsKata) in elixir.
 
-## Installation
+Run Tests:
+```
+mix test
+```
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
-
-  1. Add hotels to your list of dependencies in `mix.exs`:
-
-        def deps do
-          [{:hotels, "~> 0.0.1"}]
-        end
-
-  2. Ensure hotels is started before your application:
-
-        def application do
-          [applications: [:hotels]]
-        end
-
+Example:
+``` elixir 
+Hotel.find("## * # ##") == 211
+```
